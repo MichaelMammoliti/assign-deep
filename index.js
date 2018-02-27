@@ -13,7 +13,7 @@ const flatMapStrings = strings => {
   ;
 }
 
-const extend = (originObject, newObject) => {
+const assign = (originObject, newObject) => {
   const keys = [...Object.keys(originObject), ...Object.keys(newObject)];
   const newKeys = flatMapStrings(keys);
   const originValue = originObject[keyName];
@@ -28,22 +28,22 @@ const extend = (originObject, newObject) => {
     
     // if it's an object we want to call this function recursively
     if (areObjects) {
-      result = extend(originValue, newValue);
+      result = assign(originValue, newValue);
     }
     
     return { ...acc, ...result };
   }, {});
 };
 
-const replaceDeep = (...args) => {
+const objectAssignDeep = (...args) => {
   return args.reduce((acc, item, index) => {
     const previousItem = args[index];
     const nextItem = args[index + 1];
     
     if (!nextItem) return acc;
     
-    return extend(previousItem, nextItem);
+    return assignDeep(previousItem, nextItem);
   }, {});
 };
 
-export default replaceDeep;
+export default objectAssignDeep;
